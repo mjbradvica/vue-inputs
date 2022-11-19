@@ -9,8 +9,20 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "@vue/eslint-config-typescript",
     "plugin:vue/vue3-recommended",
+    "plugin:vuejs-accessibility/recommended",
     "plugin:prettier/recommended",
   ],
+  rules: {
+    "@typescript-eslint/explicit-function-return-type": 2,
+    "vuejs-accessibility/label-has-for": [
+      2,
+      {
+        required: {
+          every: ["id"],
+        },
+      },
+    ],
+  },
   overrides: [
     {
       files: ["cypress/e2e/**/*.{cy,spec}.{js,ts,jsx,tsx}"],
