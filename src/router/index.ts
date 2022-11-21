@@ -1,4 +1,4 @@
-import HelloWorld from "@/components/HelloWorld.vue";
+import RegisterUser from "@/features/RegisterUser.vue";
 import { createRouter, createWebHistory } from "vue-router";
 
 const router = createRouter({
@@ -7,7 +7,7 @@ const router = createRouter({
     {
       path: "/",
       name: "home",
-      component: HelloWorld,
+      component: RegisterUser,
     },
   ],
 });
