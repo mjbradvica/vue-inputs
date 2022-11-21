@@ -2,6 +2,7 @@
   "words": [
     "pinia",
     "rushstack",
-    "vuejs"
+    "vuejs",
+    "vueuse"
   ]
 }
