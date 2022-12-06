@@ -7,7 +7,7 @@
         class="input"
         :class="inputStyling"
         :required="required"
-        :value="state"
+        :value="inputHook.state"
         :type="type"
         :minlength="minlength"
         :min="calculateMin"
@@ -18,7 +18,7 @@
       />
     </div>
     <p class="help is-danger" :class="helpTextStyling">
-      {{ valid ? "success" : validationMessage }}
+      {{ inputHook.valid ? "success" : validationMessage }}
     </p>
   </div>
 </template>
@@ -27,13 +27,11 @@
 import useId from "@/common/hooks/UseId";
 import useState from "@/common/hooks/UseState";
 import ValueDefaults from "@/utilities/ValueDefaults";
-import { computed } from "vue";
+import { computed, reactive } from "vue";
+import type IUseInput from "./IUseInput";
 
 export interface BaseInputProperties {
-  state: string | number;
-  setState: (state: string) => void;
-  valid: boolean;
-  setValid: (valid: boolean) => void;
+  input: IUseInput<string | number>;
   type: string;
   label: string;
   required: boolean;
@@ -46,6 +44,8 @@ export interface BaseInputProperties {
 
 const properties = defineProps<BaseInputProperties>();
 
+const inputHook = reactive(properties.input);
+
 const inputId = useId();
 
 const [validationMessage, setValidationMessage] = useState<string>("default");
@@ -55,22 +55,22 @@ const handleUpdateInput = (event: Event): void => {
   setDirty(true);
   const inputValue = event.target as HTMLInputElement;
 
-  properties.setState(inputValue.value);
-  properties.setValid(inputValue.validity.valid);
+  inputHook.setState(inputValue.value);
+  inputHook.setValid(inputValue.validity.valid);
   setValidationMessage(inputValue.validationMessage);
 };
 
 const inputStyling = computed(() => {
   if (!dirty.value) {
     return ValueDefaults.String;
-  } else if (properties.valid) {
+  } else if (inputHook.valid) {
     return "is-success";
   }
   return "is-danger";
 });
 
 const helpTextStyling = computed(() => {
-  if (!dirty.value || properties.valid) {
+  if (!dirty.value || inputHook.valid) {
     return "is-invisible";
   }
   return ValueDefaults.String;

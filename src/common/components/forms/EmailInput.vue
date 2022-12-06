@@ -1,9 +1,6 @@
 <template>
   <BaseInput
-    :state="state"
-    :set-state="setState"
-    :valid="valid"
-    :set-valid="setValid"
+    :input="input"
     :required="true"
     :label="'Email:'"
     :type="'email'"
@@ -13,12 +10,10 @@
 
 <script setup lang="ts">
 import BaseInput from "./BaseInput.vue";
+import type IUseInput from "./IUseInput";
 
 export interface EmailInputProperties {
-  state: string;
-  setState: (state: string) => void;
-  valid: boolean;
-  setValid: (valid: boolean) => void;
+  input: IUseInput<string>;
 }
 
 defineProps<EmailInputProperties>();
